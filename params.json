@@ -1,1 +1,62 @@
-{"note":"Don't delete this file! It's used internally to help with page regeneration.","google":"","tagline":"Cloud-yi's Website","body":"### Welcome to GitHub Pages.\r\nThis automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:\r\n\r\n```\r\n$ cd your_repo_root/repo_name\r\n$ git fetch origin\r\n$ git checkout gh-pages\r\n```\r\n\r\nIf you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.\r\n\r\n### Designer Templates\r\nWe've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.\r\n\r\n### Rather Drive Stick?\r\nIf you prefer to not use the automatic generator, push a branch named `gh-pages` to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.\r\n\r\n### Authors and Contributors\r\nYou can @mention a GitHub username to generate a link to their profile. The resulting `<a>` element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (@defunkt), PJ Hyett (@pjhyett), and Tom Preston-Werner (@mojombo) founded GitHub.\r\n\r\n### Support or Contact\r\nHaving trouble with Pages? Check out the documentation at http://help.github.com/pages or contact support@github.com and we’ll help you sort it out.","name":"www.cloud-yi.com"}
+{
+    "title": "云易网络科技", 
+
+    "company": "深圳云易网络科技有限公司",
+
+    "topnav": [
+	["登录｜注册", "产品演示"], 
+	["http://yi.cloud-yi.com:8069", 
+	 "http://yanshi.cloud-yi.com:8069"]
+    ],
+
+    "usermenu": ["usermenu", "um1", "um2", "um3", "um4", "um5", "um6"],
+
+    "partner": [
+	["http://www.gnu.org", "GNU Operating System", "fromagnulinux.tiny.png"],
+	["http://opensource.org", "The Open Source Initiative", "osi_standard_logo.png"],
+	["http://www.postgresql.org", "PostgreSQL: The world's most advanced open source database", "postgresql.jpg"]
+    ],
+
+    "news": [
+	"yi-mindmap.png 云易企业综合管理系统",
+	"modules.png 系统模块化设计",
+	"crm/crm_game_01.png 客户关系管理", 
+	"crm/crm_customer.png 客户关系管理", 
+	"crm/crm_sales.png 销售管理-商机",
+	"purchases/erp_purchases.png ERP-采购管理",
+	"crm/crm_game_02.png", 
+	"crm/crm_sc_01.jpg",
+	"crm/crm_sc_04b.png",
+	"crm/crm_sc_06.png",
+	"crm/crm_game_03.png",
+	"crm/crm_sc_01.png", 
+	"crm/crm_sc_04c.png", 
+	"crm/crm_sc_08.png",
+	"crm/crm_game.png",
+	"crm/crm_sc_02.png",
+	"crm/crm_sc_04d.png",
+	"crm/crm_sc_marketing.png"
+    ],
+
+    "business": [
+	{"title": "云易科技", 
+	 "img": "images/logo-small.png", 
+	 "list": ["erp1", "erp2", "erp3"], 
+	 "desc": ["news/0.html", "news/0.html", "news/0.html"]},
+	{"title": "CRM", 
+	 "img": "image/business/gustavohouse.jpg", 
+	 "list": ["crm1", "crm2", "crm3"], 
+	 "desc": ["news/0.html", "news/0.html", "news/0.html"]}
+    ],
+
+    "maxim": [
+	"敏于行 亦善于言 -- 云易科技",
+	"云端驰骋 易览天下 -- 云易服务", 
+	"易学 易用 易行 价优   -- 产品理念",
+	"自由非免费 免费行自由之始 -- 云易开源"
+    ],
+
+    "footlinks": [
+	["http://www.miibeian.gov.cn/", ""]
+    ]
+}

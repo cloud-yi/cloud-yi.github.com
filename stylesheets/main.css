@@ -51,10 +51,558 @@ form {
 header, nav, menu, section, aside, article, footer {
     display:block;
 }
+
+.yiForm {
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
+    /* background:url("img/global/gradient/h600.png") repeat-x scroll 0 0 #FFFFFF; */
+    border:1px outset #CCCCCC;
+    margin: 20px 0;
+    padding: 15px;
+    width:350px;
+    color: #eee;
+}
+
+.yiForm fieldset {
+    border:0;
+    padding: 5px;
+    background:#333333 url(../images/logo-small.png) no-repeat scroll 215px 40px;
+}
+
+.yiInputs input, .yiInputs textarea, .yiInputs select {
+    display:block;
+    float:left;
+    width:150px;
+
+    margin-bottom:16px;
+    border: 1px solid #222;
+    color:#006400;
+    /* CSS3 spicing */
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
+    text-shadow:0 1px 1px #000;
+}
+
+.yiInputs label {    
+    display:block;
+    float: left;
+    width:75px;
+    color: black;
+
+    border: 0;
+    padding-right:20px;
+    text-align:right;
+}
+
+.yiInputs br {
+    clear:left;
+}
+
+.yiInputs input:focus { color:#000; background-color:#ccc; }
+.yiInputs input:active { background-color:#ddd; }
+
+.yiAddress {
+    text-align: center;
+}
+
+.yiAddress p {
+    width: 100%;
+}
+
+.yiAddress strong {
+    font-style: oblique;
+}
+
+.yiPartnerLinks li {
+    list-style: none;
+    text-align: center;
+}
+
+.yiPartnerLinks img {
+    width: 60px;
+}
+
+.yiTopShow {    
+    position: absolute;
+    bottom:-18px;
+    left: 0;
+    margin: 0;
+    display: block;
+    height: 294px;
+}
+
+.yiTopNav {
+    float: left;
+    /* background: url(../images/bgPrimaryNavRight.gif) right bottom no-repeat; */
+    /* border-bottom: 1px solid #f4f4f4; */
+    padding: 0 .8em 2px;
+    margin: 0;
+}
+
+.yiTopNav li {
+    float: left;
+    list-style: none;
+    margin: 0;
+    background: none;
+    padding: 0 2px;
+}
+
+.yiTopNav li a {
+    float: left;
+    padding: 0 1em;
+    line-height: 25px;
+    font-size: 1.2em;
+    color: #d3d3d3;
+    text-decoration: none;
+    margin-bottom: 2px;
+    border-bottom: 1px solid #4682b4;
+    display:block;
+}
+
+.yiTopNav .yiBlog {
+    border-left: 1px solid #0F1924;
+}
+
+.yiTopNav li.yiCurrent a, .yiTopNav li.yiCurrent a:hover {
+    border-bottom: 2px solid #00bb22;
+    background: #a52a2a;
+    margin-bottom: 0;
+    cursor: default;
+    color: #f0f0f0;
+}
+
+.yiTopNav li a:focus, .yiTopNav li a:hover {
+    background: #a52a2a;
+    color:#f0f0f0;
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border-bottom: 1px solid #176092;
+    margin-bottom: 0;
+}
+
+.yiTopNav li .selected {
+    background: #a52a2a;
+    border-bottom: 2px solid #176092;
+    color: #f0f0f0;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.yiMaxim {
+    position: absolute;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-shadow: #8b0000 0 1px 3px;
+    top: 30px;
+    right: 0;
+
+    color: white;
+    opacity: 0.7;
+    -moz-opacity: 0.7;
+    filter: alpha(opacity=40);	/* Lower opacity for IE */
+}
+
+.yiMaximSign {
+    margin-top: 5px;
+    margin-left: 80px;
+    color: red;
+    /* position: relative; */
+    /* float: right; */
+}
+
+.yiNews {
+    width: 480px;
+    height: 240px;    
+    text-align: center;
+    display: block;
+    overflow: hidden;
+    position: relative;
+
+    background-color: black;
+    opacity: 0.7;
+    -moz-opacity: 0.7;
+    filter: alpha(opacity=60);	/* Lower opacity for IE */
+}
+
+.yiNews img {
+    padding: 2px;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+
+    opacity: 0.9;
+    -moz-opacity: 0.9;
+    filter: alpha(opacity=80);	/* Lower opacity for IE */
+}
+
+.yiNewsTitle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 14px;
+    width: 100%;
+    padding: 2px;
+    background-color: #cc0000;
+    color: WhiteSmoke;
+    opacity: 0.6;
+    -moz-opacity: 0.6;
+    filter: alpha(opacity=40);	/* Lower opacity for IE */
+}
+
+.yiNewsCtrl {
+    position: absolute;
+    top: 220px;
+    left: 0;
+    height: 16px;    
+    width: 100%;
+    padding: 2px;
+    background-color: #cc0000;
+    color: white;
+    opacity: 0.6;
+    -moz-opacity: 0.6;
+    filter: alpha(opacity=40);	/* Lower opacity for IE */
+}
+
+.yiNewsCtrl ul {
+    margin: 0;
+    padding: 0;
+}
+
+.yiNewsCtrl li {
+    list-style: none;
+    padding: 1px;
+    width: 14px;
+    height: 14px;
+    float: left;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.yiNewsCtrl li.current, .yiNewsCtrl li:focus, .yiNewsCtrl li:hover {
+    background-color: #fff;
+    color: #cc0000;
+    font-weight: bold;
+}
+
+.yiNewsCtrl button {
+    height: 16px;
+    font-size: 0.8em;
+}
+
+.yiNewsCtrl div {
+    float: right;
+}
+
+.yiNewsPanel > div {
+    overflow-y: auto;
+    height: 400px;
+}
+
+.yiNewsPanel image {
+    float: left;
+    margin:10px 40px 0 10px;
+}
+
+.yiUserMenu { float: left; display: none; }
+.yiUserBtn { float: left; height: 25px; }
+.yiQuitBtn { float: left; height: 25px; display: none; }
+
+.yiTabTitle {
+    z-index: 2;
+    color: #1f1f1f;
+    /* text-shadow: #1659ac 0px 2px 3px; */
+    text-shadow: #8b2500 0 1px 3px;
+    font-size: 1.2em;
+}
+
+ul.yiTabMenu {float: left; margin: 0; list-style:none; padding: 0 .8em 2px;}
+ul.yiTabMenu li {
+    float: left;
+    margin-bottom: 2px;
+    padding: 0 1em;
+    line-height: 25px;
+    font-size: 1.2em;
+    color: #555;
+    text-decoration: none;
+    border-bottom: 1px solid #F4F4F4;
+    display:block;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+ul.yiTabMenu li.mouseover {
+    background: #f3f3f3;
+    cursor: default;
+    color:#000;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid #00bb22;    
+    margin-bottom: 0;
+}
+
+ul.yiTabMenu li.mouseout {background-position:0 -32px;}
+ul.yiTabMenu li.selected {
+    background: #282828;
+    border-bottom: 2px solid #b8860b;
+    color: #ffd700;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+ul.yiTabIcon {float:left;margin:0;padding:0 0 0 15px;list-style:none;}
+ul.yiTabIcon li {float: left;cursor:hand;height:32px;width:39px;}
+ul.yiTabIcon li.mouseover {background-position:0 0;}
+ul.yiTabIcon li.mouseout {background-position:0 -32px;}
+ul.yiTabIcon li.selected {background-position:0 0;}
+.yiComments {background:url(../images/tabmenu/tabComment.gif) no-repeat 0 -32px;}
+.yiPosts {background:url(../images/tabmenu/tabStar.gif) no-repeat 0 -32px;}
+.yiCategory {background:url(../images/tabmenu/tabFolder.gif) no-repeat 0 -32px;}
+.yiFamous {background:url(../images/tabmenu/tabHeart.gif) no-repeat 0 -32px;}
+.yiRandom {background:url(../images/tabmenu/tabRandom.gif) no-repeat 0 -32px;}
+.yiTabUser {background:url(../images/tabUser.png) no-repeat 0 -32px;}
+
+.yiPanel {
+    width:227px; position: absolute; display: block; visibility: hidden; z-index: 99999;  
+    opacity: 0.7;
+    -moz-opacity: 0.7;
+    filter: alpha(opacity=40);	/* Lower opacity for IE */
+}
+.yiPanelTop {background:url(../images/tabmenu/boxTop.gif) no-repeat;height:11px;clear:both;}
+.yiPanelBody {background-color:#282828;}
+.yiPanelBottom {background:url(../images/tabmenu/boxBottom.gif) no-repeat;height:11px;}
+
+.yiPanelBody div {display:none;}
+.yiPanelBody .show {display:block;}
+.yiPanelBody .category a {display:block;}
+
+.yiPanelBody div ul {margin:0 10px 0 25px;padding:0;width:190px;list-style-image:url(../images/tabmenu/arrow.gif)}
+.yiPanelBody div li {border-bottom:1px dotted #b8860b; padding:4px 0;cursor:pointer;color:#fffafa;}
+.yiPanelBody div ul .last {border-bottom:none}
+.yiPanelBody div li span {font-size:8px;font-style:italic; color:#eb8ff0;}
+.yiPanelBody div li.mouseover {
+    border: 1px solid #b8860b;
+    background: #eee9e9;
+    margin-bottom: 0;
+    cursor: hand;
+    color:#000;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.yiBox{
+    padding: 20px;
+    /* background: #fafafa; */
+    /* border: 1px solid #aaa; */
+    border: 0;
+    /* display: none; */
+    position: relative;
+}
+
+.yiPanelDesc {
+    height: 400px;
+}
+
+.yiPanelDesc > div {
+    display:none;
+    position: absolute;
+    padding: 20px;
+}
+
+.yiPanelDesc h3 {
+    font-weight:normal;
+}
+	
+.yiPanelDescLi {
+    list-style: none;
+    background: url(../images/arrow/yi-right.png) no-repeat;
+    margin: 15px 0;
+    padding-left: 20px;
+    cursor: pointer;
+    border-bottom:1px dotted #b3b3b3;
+    width: 150px;
+    height: 18px;
+}
+
+.yiPanelDesc li.current {    
+    color: #8b0000;
+    background: url(../images/arrow/yi-right.png) no-repeat 0 -18px;
+    border-bottom: 1px outset steelblue;
+    font-weight: bold;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.yiDesc {
+    display: none;
+    position: absolute;    
+    padding: 30px;
+    color: #fff;
+    overflow-y: auto;
+    border: 1px outset steelblue;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    -moz-box-shadow: 10px 10px 15px #004276;
+    -webkit-box-shadow: 10px 10px 15px #004276;
+    box-shadow: 10px 10px 15px #004276;
+    /* behavior: url(css/ie-css3.htc); */
+}
+
+.yiPanelDesc .description {
+    width:280px;
+    top: 30px;
+    left: 228px;
+}
+
+.yiPanelNav {
+    border-bottom:1px solid steelblue;
+}
+
+.yiPanelNav ul {
+    margin: 0 30px;
+}
+
+.yiPanelNav li {	
+    float:left;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+    list-style-type:none;
+    margin-top: 0;
+    word-spacing:-2px;
+    font-size:11px;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+    border-bottom:1px solid #ddd;
+}
+
+.yiPanelNav li:focus, .yiPanelNav li:hover {
+    background-color: #eaeaea;
+    border-right: 1px solid steelblue;
+    border-left:1px solid steelblue;
+    border-bottom:1px solid steelblue;
+}
+
+.yiPanelNav li.current {
+    background:url(../images/yi-ptab.jpg) no-repeat;
+    cursor: default;
+
+    border-right: 1px solid steelblue;
+    border-left:1px solid steelblue;
+    border-bottom:1px solid steelblue;
+}
+
+.yiPanelNav img {
+    background-color:#fff;
+    border:1px solid #ccc;
+    display:block;
+    width: 80px;
+    height: 60px;
+}
+
+.yiPanelNav strong {
+    display:block;
+    width: 80px;
+    height: 20px;
+}
+
+.yiAbout > img {
+    position: absolute;
+    top: 150px;
+    left: 350px;
+}
+
+.yiAboutIdea {
+    text-align: center;
+    padding-top: 300px;
+}
+
+.yiAbout > div {
+    margin: 20px auto;
+}
+
+.yiAbout > div > ul > li {
+    list-style: none;
+    background: url(../images/arrow/yi-right.png) no-repeat;
+    margin: 15px 0;
+    padding-left: 20px;
+    cursor: pointer;
+    border-bottom:1px dotted #b3b3b3;
+    width: 160px;
+    height: 18px;
+}
+
+.yiTitle {
+    padding: 30px;
+    border-bottom: 2px solid steelblue;
+    text-align: center;
+}
+
+.yiFooter {
+    border-top: 2px solid #777;
+    padding-top: 5px;
+    margin: 0;
+}
+
+.yiFooterLinks {
+    width: 500px;
+    padding: 0;
+    float: right;    
+}
+
+.yiFooterLinks img {
+    height: 27px;
+}
+
+.yiFooterLinks ul {
+    padding: 0;
+}
+
+.yiFooterLinks li {
+    padding: 0 10px;
+    float: right;
+    list-style: none;
+}
+
+.yiFooterLinks a {
+    color: #4169e1;
+    text-decoration: underline;
+}
+
+.yiCredits {
+    width: 240px;
+    float: left;
+}
+.yiCredits p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #000;
+    line-height: 1.4;
+    float: right;
+}
+
+.yiCredits a {
+    color: #4169e1;
+    text-decoration: underline;
+}
+
 h1,h2,h3,h4,h5,h6 {
     margin:0 0 20px;
     font-family: 'Droid Serif', serif;
-    color:#666;
+    color:SteelBlue;
     line-height:normal;
 }
 h1 {
@@ -146,7 +694,7 @@ p {
     background: transparent url(../images/top_menu_l_bg.png) no-repeat top left;
     cursor:pointer;
 }
-#img {
+.yiTopLogo {
     background: url("../images/headerimg.jpg") no-repeat scroll right bottom transparent;
     bottom: 0;
     height: 294px;
@@ -267,7 +815,7 @@ header #search {
 .leftcol {
     float: left;
     margin: 0;
-    width: 230px;
+    width: 240px;
     padding: 0;
 }
 .rightcol  {
@@ -717,7 +1265,7 @@ footer {
     overflow:hidden;
     width:980px;
     padding:0 0 30px 0;
-    height:60px;
+    height:80px;
     line-height:20px;
     color:#666666;
 }

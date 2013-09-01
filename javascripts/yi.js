@@ -1,6 +1,6 @@
 /**
  * @license 
- * yinet @VERSION - base client library.
+ * yi.js @VERSION - base client library.
  * 
  * NO COPYRIGHTS OR LICENSES. DO WHAT YOU LIKE.
  * 
@@ -10,26 +10,34 @@
 
 (function($){          
     $.yiApp = $.yiApp || { 
-        version: "@VERSION",
+        version: "@VERSION",        
 
-        topNav: function (m, t) {
-	    if (!this.istype(m, Array)) return;
+        primaryNav: function (m, t) {
+            var ul = $('<ul class="yiNavList"></ul>')
+            for (var i=0; i<m.length; i+=2)
+                ul.append('<li rel="#' + m[i+1] + '">' + m[i] + '</li>');
+            $(".yiNav").append(ul);
+            
+            $('.yiNavList li').click(function(e){
+                var sel = $('.yiNavList li.selected');
+                if (sel.attr('rel') == $(this).attr('rel')) return;
 
-            var ul = $('<ul class="yiTopNav"></ul>')
-            for (var i=0; i < m.length; i++)
-                ul.append('<li><a target="_blank" href="' + t[i] + '">' + m[i] + '</a>')
-	    
-            $(".yiTopNav").append(ul)            
+                sel.removeClass('selected');
+                $(sel.attr('rel')).fadeOut('slow');
+                $(this).addClass('selected')
+                $($(this).attr('rel')).fadeIn('slow');
+                if (typeof(t) != undefined)
+                    $(document).attr("title", t + ' - ' + $(this).text());
+                e.preventDefault()
+            })
         },
 
         secondNav: function (m) {
-	    if (!this.istype(m, Array)) return;
-
             for (var i=1; i < m.length; i++) {
                 var id = "businessTab" + (i-1)
                 var div = $('<div id="' + id + '" class="yiBoard"><ul></ul></div>')        
                 var ul = $('ul', div)
-                for (j=0; j < m[i].length; j++) {                   
+                for (j in m[i]) {                   
                     tid = id + '-' + j
                     ul.append('<li><a href="#' + tid + '">' + m[i][j] + '</a></li>')
                     div.append('<div id=' + tid + '></div>')
@@ -39,106 +47,77 @@
             }
         }, 
 
-        panelNav: function(pid, m) {
-	    if ($(pid).length == 0 || !this.istype(m, Array)) return;	    
+        panelNav: function(m) {
+            if (m == undefined || ! $.isArray(m) || m.length == 0) return;
 
-	    $(pid).append(
-		$('<div></div>').attr('id', 'yiPanelDesc').attr('class', 'yiPanelDesc'),
-		'<br clear="all"/>',
-		$('<div><ul></ul></div>').attr('id', 'yiPanelNav').attr('class', 'yiPanelNav'), 
-		'<br clear="all"/>');
-
-            var nav = $('#yiPanelNav');
-	    var desc = $('#yiPanelDesc');
-
-            for (i=0; i<m.length; i++) {
-                var id = "yiPanelDesc" + i;
+            var nav = $('#yiPanelNav').append('<ul></ul>');
+            for (i in m) {
+                var id = "yiPanel" + i;
                 var div = $('<div><h3></h3><ul></ul></div>').attr('id', id);
                 var ul = $('ul', div);
-
                 $('h3', div).text(m[i]['title']);
-
-                for (j=0; j<m[i]['list'].length; j++) {
-                    ul.append('<li class="yiPanelDescLi">' + m[i]['list'][j] + '</li>');
-                    div.append($('<div></div>').attr({
+                for (j in m[i]['list']) {
+                    ul.append('<li class="panel">' + m[i]['list'][j] + '</li>');
+                    var desc = $('<div></div>').attr({
                         'class': 'yiDesc description',
                         'rel': m[i]['desc'].length > j ? m[i]['desc'][j] : ""
-                    }));
+                    });
+                    div.append(desc);
                 }
-                
-		desc.append(div);
-
+                $('#yiPanel').append(div);
                 ul.tabs('#'+id+' > div.description', {
                     effect: 'fade',
                     fadeOutSpeed: 400,
                     onBeforeClick: function(e, i){             
-                        var p = this.getPanes()[i];
-                        var rel = p.getAttribute('rel');
-                        if (rel && !p.innerHTML)
-                            $.yiApp.loadPage(rel, p);
+                        var desc = this.getPanes()[i];
+                        var rel = desc.getAttribute('rel');
+                        if (rel && !desc.innerHTML)
+                            $.yiApp.loadPage(rel, desc);
                     },
                     event: 'mouseover'
                 });
 
-                $('ul', nav).append('<li><img src="' + m[i]['img'] + '"/><strong>' 
-				    + m[i]['title'] + '</strong></li>');
+                $('ul', nav).append('<li><img src="' + m[i]['img'] + '"/><strong>' + m[i]['title'] + '</strong></li>');
             }
 
-	    // $(id).append(desc).append('<br clear="all"/>')
-	    // 	.append(nav).append('<br clear="all"/>');	    
-            $('ul', nav).tabs("#yiPanelDesc > div", {
+            $('ul', nav).tabs("#yiPanel > div", {
                 effect: 'fade',
                 fadeOutSpeed: 400
             });
         },
-
-        maxim: null,
-        maximCur: 0,
-	maximCtrl: function(data) {
-	    if (!this.istype(data, Array)) reutrn;
-
-	    this.maxim = data
-
-	    $(".yiMaxim")
-		.append('<div><strong></strong></div>')
-		.append('<div class="yiMaximSign"></div>')
-		.show()
-	    this.maximShow(this.maximCur);
-
-	    window.setInterval(function() {
-		if ($.yiApp.isDemo()) $.yiApp.maximShow($.yiApp.maximCur + 1);
-	    }, 10000);
-	},
-        maximShow: function(cur) {
-            var maxim = $(".yiMaxim div.ui-widget-content");
+        
+        jingyan: null,
+        jingyanCur: 0,
+        jingyanShow: function(cur) {
+            var jingyan = $("#yiJingYan div.ui-widget-content");
             
-            if (cur >= this.maxim.length) cur = 0;
-            this.maximCur = cur;
+            if (cur >= this.jingyan.length) cur = 0;
+            this.jingyanCur = cur;
 
-            if (this.maxim.length == 0 || this.maxim[cur] == "") return;
+            if (this.jingyan.length == 0 || this.jingyan[cur] == "") return;
 
-            $('.yiMaxim strong').text("");
-	    maxim.animate({
+            $('#yiJingYan strong').text("");
+	    jingyan.animate({
 	        backgroundColor: "#aa0000",
 	        color: "#fff"
 	    }, 1000);
-	    maxim.animate({
+	    jingyan.animate({
 	        backgroundColor: "#fff",
 	        color: "#000"
 	    }, 1000);
 
-            var jy = this.maxim[cur].split("--");
-            $('.yiMaxim strong').text(jy[0]);
-            $('.yiMaximSign').text("--    " + jy[1]);
+            var jy = this.jingyan[cur].split("--");
+            $('#yiJingYan strong').text(jy[0]);
+            $('#yiQianMing').text("--    " + jy[1]);
         },
 
         demos: null,
-        news: [],
+        news: null,
         newsCur: -1,
         newsOffset: 0,
 
         isDemo: function () {
-            return $('.yiNewsCtrl:visible').length == 0 && $('.yiNewsPanel :visible').length == 0;
+            return $('#yiNewsCtrl:visible').length == 0 && $('.yiOverlay :visible').length == 0;
         },
 
         newsShow: function (cur) {
@@ -152,29 +131,19 @@
 
             if (this.news[cur] == "") return;
             
-            var news = this.news[cur].split(' ');
-	    var img = $('.yiNews img');
-
+            var news = this.news[cur].split('\t');
             if (this.isDemo())
                 $('.yiNewsTitle').show('blind', {}, 600);
 
-            img.attr('src', 'images/' + news[0]);
-
             $('.yiNewsTitle').text(news[1]);
+
+            $('.yiNews img').attr('src', 'image/news/' + news[0]);
 
             $($('.yiNewsCtrl li').removeClass("current")[this.newsCur])
                 .addClass("current");
         },
 
-        newsCtrl: function (data) {
-	    // var t = typeof(data);
-
-	    // if (t == undefined || ! (data instanceof Array) || data.length == 0) return;
-
-	    if (!this.istype(data, Array) || data.length == 0) return;
-
-	    this.news = data;
-
+        newsCtrl: function () {
             $('.yiNews')
                 .mouseenter(function(){
                     $('.yiNewsCtrl').fadeIn('slow');
@@ -183,7 +152,7 @@
                     $('.yiNewsCtrl').fadeOut('slow');
                 });
 
-            $('.yiNews img').attr("rel", "#yiNewsPanel").overlay({
+            $('.yiNews img').attr("rel", ".yiNewsPanel").overlay({
                 effect: 'apple',
                 mask: 'darkred',
                 onBeforeLoad: function(){
@@ -242,21 +211,9 @@
                 $.yiApp.newsOffset = $.yiApp.news.length - 1 - 5;
                 $.yiApp.newsShow(-1);
             });
-
-	    this.newsShow(0)
-	    $('.yiNewsCtrl').effect('shake', {}, 500, function(){
-		$(this).fadeOut('slow');
-	    })
-
-	    window.setInterval(function() {
-		if ($.yiApp.isDemo() && $('.yiNews :visible').length > 0)
-		    $.yiApp.newsShow($.yiApp.newsCur + 1);
-	    }, 3000);
         },
 
         scrollable: function (img) {
-	    if (!this.istype(img, Array)) return;
-
             var div = $('<div class="yiScrollable"></div>')
                 .append('<div class="items"></div>')
 
@@ -276,7 +233,7 @@
 
         accordion: function (tid, a) {
             var div = $('<div id="' + tid.match('[^#].*') + 'Accordion"></div>')
-            for (i=0; i<a.length; a++) {
+            for (i in a) {
                 div.append(
                     $('<div/>')
                         .append($('<h3><a href="#">' + a[i].title + '</a></h3>'))
@@ -288,22 +245,17 @@
         },
 
         createTabMenu: function (id, hA, bA) {
-
-	    if ($(id).length == 0 || !this.istype(hA, Array) || !this.istype(bA, Array)) return;
-
-            var ul = $(id), panel = $('<div></div>')
-
-	    ul.addClass("yiUserMenu");
+            var ul = $(id), panel = $('<div</div>')
 
             panel.addClass("yiPanel")
                 .append('<div class="yiPanelTop"></div>')
                 .append('<div class="yiPanelBody"></div>')
                 .append('<div class="yiPanelBottom"></div>')
-                .attr("id", id.match('[^#.].*') + "Panel")
+                .attr("id", id.match('[^#].*') + "Panel")
 
-            for (i=0; i<hA.length; i++) {
+            for (i in hA) {
                 var div = $('<div><ul></ul></div>'), ulDiv = $('ul', div)
-                for (j=0; j<bA[i].length; j++)
+                for (j in bA[i])
                     ulDiv.append('<li>' + bA[i][j] + '</li>')
                 $('.yiPanelBody', panel).append(div)
 
@@ -345,22 +297,21 @@
             })
 
             tabs.click(function(){
-                var top = $(this).offset().top
-                var left = $(this).offset().left
-
-                panel.css({"top": top + $(this).innerHeight(),
-			   "left": Math.abs(left - (panel.outerWidth() - $(id).width())/2),
-			   "visibility": "visible"})
+                top = tabs.offset().top
+                left = tabs.offset().left
+                panel.css("top", top + tabs.innerHeight())
+                panel.css("left", Math.abs(left - (panel.outerWidth() - $(id).width())/2))
+                panel.css("visibility", "visible")
                 $(this).addClass('selected')        
-                $('div:eq(' + $(this).index(this) + ')', body).slideDown('1500')
+                $('div:eq(' + tabs.index(this) + ')', body).slideDown('1500')
             }).mouseover(function(){
                 $(this).removeClass('mouseout')
                 $(this).addClass('mouseover')
             }).mouseout(function(e){
-                $(this).removeClass('mouseover')
+                tabs.removeClass('mouseover')
                 $(this).addClass('mouseout')
-                var top = $(this).offset().top - $(document).scrollTop()
-                var left = $(this).offset().left - $(document).scrollLeft()
+                top = $(this).offset().top - $(document).scrollTop()
+                left = $(this).offset().left - $(document).scrollLeft()
                 if (e.clientX < left || e.clientY < top 
                     || e.clientX > left + $(this).innerWidth() - 10) {
                     $('div:eq(' + tabs.index(this) + ')', body).slideUp('1500')
@@ -370,7 +321,7 @@
                 // alert(e.clientX + ', ' + e.clientY + ' | ' + left + ', ' + top + ' | ' + $(document).scrollTop())
             })
 
-            $('#category li', body).mouseover(function() {
+            $('.category li', body).mouseover(function() {
                 $(this).children().animate({paddingLeft:"20px"}, {queue:false, duration:300})
             }).mouseout(function() {                
                 $(this).children().animate({paddingLeft:"0"}, {queue:false, duration:300})
@@ -388,31 +339,27 @@
         },
 
         userBtn: function (menu) {
-	    if (!this.istype(menu, Array)) return;
-
-            $('.yiUserBtn').show()
-            $('.yiQuitBtn').hide()
-
-            this.createTabMenu("#yiUserMenu", ['【' + menu.shift() + '】'], [menu])
-            this.tabMenu("#yiUserMenu")
-	    $("#yiUserMenu").show()
+            $('.yiUserBtn').hide()
+            $('.yiQuitBtn').show()
+            $('.yiUserMenu').show()
+            yi.createTabMenu(".yiUserMenu", ['【' + menu.shift() + '】'], [menu])
+            yi.tabMenu(".yiUserMenu")
         },
 
         userDlg: function () {
-            $('.yiOverlay').show()
-            $('.yiOverlay > div > div').accordion({header: "h3"})
-            $('.yiOverlay').hide()
-
-            $('.yiOverlay button').button().click(function (e) {
+            $('.yiUser').show()
+            $('.yiUser > div').accordion({header: "h3"})
+            $('.yiUser').hide()
+            $('.yiUser button').button().click(function (e) {
                 // var event = $.event.fix(e)
                 // event.type = 'submit'                
-                // $('.yiOverlay form div:visible').parent().trigger(event)
-                $('.yiOverlay form div:visible').parent().submit()
+                // $('#yiUser form div:visible').parent().trigger(event)
+                $('.yiUser form div:visible').parent().submit()
                 e.preventDefault()
             })
 
             $('.yiQuitBtn').button().click(function(e){
-                $.getJSON("/app?mod=logout")
+                $.getJSON("/app/logout")
                 $(this).hide()
                 $('.yiUserMenu').html("").hide()
                 $('.yiUserMenuPanel').remove()
@@ -429,14 +376,14 @@
             })
             $.tools.validator.fn("[data-equals]", "Value not equal with the $1 field", function(input) {
 	        var name = input.attr("data-equals"),
-	            field = this.getInputs().filter("[name=" + name + "]")
+	        field = this.getInputs().filter("[name=" + name + "]")
 	        return input.val() == field.val() ? true : [name]
             })
 
-            $('.yiOverlay form').validator().bind("onBeforeValidate", function (e, els) {
+            $('#yiUser form').validator().bind("onBeforeValidate", function (e, els) {
                 // els.filter('[name="username"], [name="email"]').each(function(i, e){
                 //     form.data("validator").reset($(e))
-		//     $.getJSON("/app?mod=query&" + form.serialize(), function(r) {
+		//     $.getJSON("/app/query?" + form.serialize(), function(r) {
 		// 	if (! r.email || ! r.username) {
                 //             var err = {}
                 //             if (e.name == "username") {err.username = "用户名已被注册"}
@@ -449,7 +396,7 @@
                     var form = $(this)
                     els.filter('[name="username"], [name="email"]').each( function(i, each) {
                         form.data("validator").reset($(each))
-		        $.getJSON("/app?mod=query&" + form.serialize(), function(r) {
+		        $.getJSON("/app/query?" + form.serialize(), function(r) {
 			    if (! r.email || ! r.username) {
                                 var err = {}
                                 var valid = form.data("validator")
@@ -460,7 +407,7 @@
                             }
 		        })
                     })
-			}
+                }
             }).bind("onFail", function(e, errors) {
                 if (e.originalEvent == undefined || e.originalEvent.type == 'submit')
 	            $.each(errors, function() {
@@ -469,47 +416,47 @@
 		            input.css({borderColor: '#444'})
 		        })
                     })
-			}).bind("onSuccess", function (e, els) {
-			    if (e.originalEvent == undefined || e.originalEvent.type == 'submit') {
-				var div = $('.yiOverlay form div:visible')
-				var form = $(this)
-				
-				if (div.attr('id') == "yiRegister") {                        
-				    $.getJSON("/app?mod=query&" + form.serialize(), function(r) {
-					if (r.email && r.username) {
-					    $.post("/app?mod=register"
-						   , form.serialize()
-						   , function(data) {
-						       data.length && $.yiApp.userBtn(data)
-						   }
-						   , "json")
-					    $('.yiUserBtn').overlay().close()                                
-					} else { // server-side validation failed. use invalidate() to show errors
-					    var err = {}
-					    if (! r.username) {err.username = "用户名已被注册"}
-					    if (! r.email) {err.email = "邮件地址已被注册"}
-					    form.data("validator").invalidate(err)
-					}
-				    })
-				} else {
-				    $.post("http://localhost:8069/"
-					   , form.serialize()
-					   , function(data) {
-					       data.length && $.yiApp.userBtn(data)
-					   }
-					   , "json")
-				    $('.yiUserBtn').overlay().close()
-				}
-			    } 
+            }).bind("onSuccess", function (e, els) {
+                if (e.originalEvent == undefined || e.originalEvent.type == 'submit') {
+                    var div = $('#yiUser form div:visible')
+                    var form = $(this)
+                    
+                    if (div.attr('id') == "yiRegister") {                        
+		        $.getJSON("/app/query?" + form.serialize(), function(r) {
+			    if (r.email && r.username) {
+                                $.post("/app/register"
+                                       , form.serialize()
+                                       , function(data) {
+                                           data.length && $.yiApp.userBtn(data)
+                                       }
+                                       , "json")
+                                $('#yiUserBtn').overlay().close()                                
+			    } else { // server-side validation failed. use invalidate() to show errors
+                                var err = {}
+                                if (! r.username) {err.username = "用户名已被注册"}
+                                if (! r.email) {err.email = "邮件地址已被注册"}
+                                form.data("validator").invalidate(err)
+                            }
+		        })
+                    } else {
+                        $.post("/app/login"
+                               , form.serialize()
+                               , function(data) {
+                                   data.length && $.yiApp.userBtn(data)
+                               }
+                               , "json")
+                        $('#yiUserBtn').overlay().close()
+                    }
+                } 
 
-			    e.preventDefault()
-			})
+                e.preventDefault()
+            })
 
             $('[name="username"], [name="email"]', $('#yiRegister')).change(function(e) {
                 var f = $('#yiRegister').parent()
                 var my = $(this)
                 f.data("validator").reset(my)                
-	        $.getJSON("/app?mod=query&" + f.serialize(), function(r) {
+	        $.getJSON("/app/query?" + f.serialize(), function(r) {
                     if (! r.username || ! r.email ) {
                         var err = {}                        
                         if (! r.username) {err.username = "用户名已被注册"}
@@ -519,16 +466,16 @@
 	        })
             })
 
-            $('.yiOverlay a').not('.close').click(function() {
-                $('.yiOverlay form').trigger('reset')
-                $('.yiOverlay form input').css('borderColor', '')
+            $('#yiUser a').not('.close').click(function() {
+                $('#yiUser form').trigger('reset')
+                $('#yiUser form input').css('borderColor', '')
             })
-            $('.yiUserBtn').attr("rel", "#yiUser").button().overlay({
+            $('#yiUserBtn').attr("rel", "#yiUser").button().overlay({
 	        effect: 'apple',
 	        mask: '#555',
                 onBeforeClose: function () {
-                    $('.yiOverlay form').trigger('reset')
-                    $('.yiOverlay form input').css('borderColor', '')
+                    $('#yiUser form').trigger('reset')
+                    $('#yiUser form input').css('borderColor', '')
                 }
 	    })
         },
@@ -555,105 +502,118 @@
                 'filter': "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" + img + "',sizingMethod='scale')",
                 '-ms-filter': '"progid:DXImageTransform.Microsoft.AlphaImageLoader(src=\'' + img + '\',sizingMethod=\'scale\')"'
             });
-        },
-
-	partnerLinks: function(desc) {	    
-	    if (!this.istype(desc, Array)) return;
-	    var partner = $(".yiPartnerLinks");
-	    var ul = $("<ul></ul>");
-	    
-	    for (i=0; i<desc.length; i++)
-		ul.append('<li><a target="_blank" href="' + desc[i][0] 
-			  + '" title="' + desc[i][1]
-			  + '"><img src="/images/partner/' + desc[i][2]
-			  + '"/></a></li>');
-
-	    partner.append(ul);
-	},
-
-	footer: function(company, links) {
-	    if (typeof(company) == undefined) company = ""
-
-	    var f = $(".yiFooter");
-	    var c = $('<div class="yiCredits"><p><strong></strong></p></div>');
-	    var l = $('<div class="yiFooterLinks"><ul></ul></div>');
-
-	    $("strong", c).append("版权所有 © 2012").after(company);
-	    f.append(c);
-	    
-	    if (!this.istype(links, Array)) return;
-
-	    for (i=0; i<links.length; i++)
-		$("ul", l).append('<li><a target="_blank" href="'
-				  + links[i][0]  + '">'
-				  + links[i][1]  + '</a></li>');
-
-	    f.append(l);
-	},
-
-	istype: function(v, t) {
-	    var _t = typeof(v);
-	    return _t == t || (_t == 'object' && typeof(t) == 'function' && v instanceof t);
-	},
-
-	debug: function() {
-	    $.ajax({
-		url: document.baseURI + "?debug=1",
-		data: null,
-		type: 'GET',
-		crossDomain: true,
-		dataType: 'html',
-		success: function() { alert("Success"); },
-		error: function() { alert('Failed!'); },
-		beforeSend: function() {},
-	    });
-	}
+        }
     }
 
-    $.getJSON("/params.json", function(o){
+    $(function(){
+        var yi = $.yiApp;
+        var title = '云易网络科技';
+        $(document).attr('title', title);
+        $('.yiTitle').text(title);
+        yi.primaryNav(['公司简介', 'yiAbout',
+                        '产品服务', 'yiBusiness',
+                        '企业展示', 'yiHuoli',
+                        '天下英才', 'yiPin'], title);
+        $('.yiNavList li:first').click();
 
-        if (typeof(o) != 'object') return;
-	
-	var yi = $.yiApp
-	
-	if (typeof(o.title) == 'string')
-            $(document).attr("title", o.title)
+        yi.userBtn(["a", "b"]);
 
-        // yi.scrollable(o.scroll);
+        var yiPanelNav = [
+            {title: '一、买卖单赎楼服务',
+             img: 'image/business/gustavohouse.jpg',
+             list: ["卖方担保赎楼", "买方担保赎楼", "现金赎楼"],
+             desc: ["business/b1-1.html", "business/b1-2.html", "business/b1-3.html"]},
+            {title: '二、同名转加按赎楼服务',
+             img: 'image/business/alexanderplatz-station.jpg',
+             list: ["同名转加按担保赎楼服务", "同名转加按现金赎楼服务", "现金赎楼消费贷款"],
+             desc: ["business/b2-1.html","business/b2-2.html","business/b2-3.html"]},
+            {title: '三、拍卖房赎楼服务',
+             img: 'image/business/1.jpg',
+             list: ["拍卖房担保赎楼服务", "拍卖房现金赎楼服务"],
+             desc: ["business/b3-1.html", "business/b3-2.html"]},
+            {title: '四、按揭贷款服务',
+             img: 'image/business/2.jpg',
+             list: ["红本房抵押快速放款 ", "按揭服务代理 ", "起诉房、逾期房减损协助 ",
+                    "自助成交咨询代办服务 ", "多人共有产权转移过户服务 ", "财产分割服务代理 ",
+                    "短期过渡资金咨询办理服务 "],
+             desc: ["business/b4-1.html","business/b4-2.html","","business/b4-4.html",
+                    "business/b4-5.html"]}
+        ];
 
-        yi.topNav(o.topnav[0], o.topnav[1])
-        // yi.secondNav(o.nav)
+        yi.panelNav(yiPanelNav);
 
-        // yi.userBtn(o.usermenu)
-        // {user: o.usermenu.shift(), // document.cookie.match('.*=([^;]*)')[1]
-        //  menu: o.usermenu})
+        $('#yiService').accordion({heightStyle: "content"});
 
-	yi.newsCtrl(o.news) 
+        $.get("jingyan.txt", function(data){
+            yi.jingyan = data.split('\n');
+            yi.jingyanShow(0);
+        });
 
-	yi.maximCtrl(o.maxim)		
+        yi.newsCtrl();
+        $.get('news.txt', function(data){
+            yi.news = data.split('\n');
+	    // yi.news = [ "xyqy-01.jpg	首笔对公业务合同签约仪式"
+	    // 		 , "dgqy-01.jpg	建行对公合作签约仪式"
+	    // 		 , "xyqy-09.jpg	首笔对公业务合同签约仪式 - 花絮"
+	    // 		 , "dgqy-03.jpg	建行对公合作签约仪式 - 花絮"
+	    // 		 , "xyqy-05.jpg	首笔对公业务合同签约仪式 - 花絮"
+	    // 		 , "dgqy-05.jpg	建行对公合作签约仪式 - 花絮"
+	    // 	       ];
+            yi.newsShow(0);
+            $('.yiNewsCtrl').effect('shake', {}, 500, function(){
+                $(this).fadeOut('slow');
+            });
+        });
 
-	yi.partnerLinks(o.partner)
+        $('#yiPin > div:not(:last)').addClass("yiDesc description");
+        $('#yiPin div.right > ul').tabs(
+            "#yiPin .yiDesc", 
+            {effect: 'fade', event: 'mouseover'});
 
-	yi.footer(o.company, o.footlinks)
-	
-	// yi.userDlg()
-	
-	yi.panelNav("#yiBusiness", o.business);
+        yi.bgCSS('.yiDesc', 'image/overlay/gray.jpg');
 
-	// yi.accordion('#businessTab0-0', 
-        //              [{title: "一：", text: "云易科技"}
-        //               ,{title: "二：", text: "云易科技"}
-        //               ,{title: "三：", text: "云易科技"}])
-	// yi.accordion('#businessTab0-1', 
-        //              [{title: "一：", text: "云易科技"}
-        //               ,{title: "二：", text: "云易科技"}
-        //               ,{title: "三：", text: "云易科技"}])
+        $.get('demos.txt', function(data){
+            var demos = data.split('\n');
+            for (var i=0; i<$('#yiHuoli ul.yiVNav li').length; i++) {
+                var p = $('<div class="yiVPanel">' +
+                          '<div class="navi"></div>' +
+                          '<div class="scrollable"><div class="items"></div></div>' +
+                          '</div>');
+                var items = demos[i].split('\t');
+                for (var j=0; j<3; j++) {
+                    // $('.navi', p).append('<a href="#">' + j + '</a>');
+                    $('.items', p).append(
+                        '<div class="item">' +
+                            '<img src="image/' +  
+                            (items[j] != undefined ? items[j] : '') + '" />' +
+                            '</div>');
+                }
+                $('#yiHuoliPages > div').append(p);
+            }
 
-	// $('.yiScrollable').scrollable()
+            $('#yiHuoliPages').scrollable({
+                item: '.yiVPanel',
+	        vertical: true,
+                keyboard: 'static',
+	        onSeek: function(event, i) {
+	            horizontal.eq(i).data("scrollable").focus();
+	        }
+            }).navigator('#yiHuoli ul.yiVNav');
 
-	// $('.yiBoard').hide()
-	
-	// $.getJSON("/app?mod=debug", function(o){$("#yiDebug").show().html(o)})   	
-    })   
+            var horizontal = $('.scrollable').scrollable({circular: true, item: '.item'}).navigator(".navi");
+            horizontal.eq(0).data("scrollable").focus();
+        });
 
+	if ($('#yiNews')) {
+            window.setInterval(function() {
+		if (yi.isDemo() && $('#yiNews :visible').length > 0)
+                    yi.newsShow(yi.newsCur + 1);
+            }, 3000);
+	    
+            window.setInterval(function() {
+		if (yi.isDemo()) yi.jingyanShow(yi.jingyanCur + 1);
+            }, 10000);
+	}
+    })
+        
 })(jQuery)

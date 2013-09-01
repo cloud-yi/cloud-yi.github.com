@@ -1,0 +1,125 @@
+/* automatically absolutely positioned */
+/* .yiOverlay1 { */
+/*     height:200px;		 */
+/*     background-color:#666; */
+/*     -moz-border-radius:30px; */
+/*     -webkit-border-radius:30px; */
+/* } */
+
+.yiNewsPanel {
+    width: 640px;
+}
+
+.yiNewsPanel div {
+    padding: 50px 70px;
+    font-size: 12px;
+    color: #fff;
+}
+
+div.yiNewsPanel .close {
+    right: 17px;
+    top: 17px;
+    height: 28px;
+    width: 28px;
+}
+
+.yiUser {
+    width: 480px;
+}
+
+div.yiUser .close {
+    right:5px;
+    top:7px;
+    height:27px;
+    width:27px;    
+}
+
+div.yiOverlay {
+    background-image:url(../images/overlay/overlay.png);
+    display:none;
+    color:#fff;
+    opacity: 0.9;
+    margin: 0 auto;
+    padding: 8px;
+}
+
+div.yiOverlay .close {
+    background-image:url(../images/overlay/close.png);
+    position:absolute;
+    cursor:pointer;
+}
+
+
+div.yiOverlay .form {
+    padding: 15px;
+    color:#eee;
+    border: 0;
+}
+
+div.yiOverlay fieldset {
+    border:0;
+    padding: 5px;
+    background:#333333 url(../images/logo-small.png) no-repeat scroll 215px 40px;
+}
+/* error message */
+.error {
+    /* height:15px; */
+    background-color: #8b0000;
+    font-size: 10px;
+    border:1px solid #E1E16D;
+    padding:4px 10px;
+
+    color: white;
+    margin-left: -2px;
+    
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px; 
+    border-radius:4px;
+    -moz-border-radius-bottomleft:0;
+    -webkit-border-bottom-left-radius:0; 
+    border-bottom-left-radius:0;
+    -moz-border-radius-topleft:0;	
+    -webkit-border-top-left-radius:0;
+    border-top-left-radius:0;    
+    -moz-box-shadow:0 0 6px #ddd;
+    -webkit-box-shadow:0 0 6px #ddd;	
+    box-shadow:0 0 6px #ddd;
+    z-index: 10001;
+}
+
+.error p {
+    display: inline;
+}
+
+.next, .prev {
+    position:absolute;		
+    cursor:pointer;
+    display:block;
+    width:100px;
+    height:200px;
+    background:url(../images/overlay/next.gif) no-repeat;
+}
+
+.prev {
+    left:10px;		
+}
+
+.next {
+    right:10px;		
+}
+
+.info {
+    position:absolute;
+    bottom:10px;
+    background-color:#333;
+    opacity:0.7;
+    padding:4px 15px;
+}
+
+.info strong {
+    display:block;	
+}
+
+.disabled {
+    visibility:hidden;		
+}
