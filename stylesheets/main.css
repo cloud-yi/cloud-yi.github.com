@@ -1276,7 +1276,7 @@ footer a {
     color:#cbc1cb;
 }
 .content_b {
-    background: url("../images/content_b.gif") no-repeat scroll center top transparent;
+    /* background: url("../images/content_b.gif") no-repeat scroll center top transparent; */
     height: 70px;
     position: relative;
 }
