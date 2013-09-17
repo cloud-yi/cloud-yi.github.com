@@ -6,7 +6,7 @@
     "topnav": [
 	["登录｜注册", "产品演示"], 
 	["http://yi.cloud-yi.com:8069", 
-	 "http://yanshi.cloud-yi.com:8069"]
+	 "http://yanshi.cloud-yi.com"]
     ],
 
     "usermenu": ["usermenu", "um1", "um2", "um3", "um4", "um5", "um6"],
