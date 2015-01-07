@@ -17,7 +17,10 @@
 
             var ul = $('<ul class="yiTopNav"></ul>')
             for (var i=0; i < m.length; i++)
-                ul.append('<li><a target="_blank" href="' + t[i] + '">' + m[i] + '</a>')
+		ul.append($('<li>').append($('<a>').text(m[i]).click(function(){
+		    window.open('http://yanshi.cloud-yi.com:8069/login?user=admin&passwd=admin', '_blank')
+		})));
+                // ul.append('<li><a target="_blank" href="' + t[i] + '">' + m[i] + '</a>')
 	    
             $(".yiTopNav").append(ul)            
         },
